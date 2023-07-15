@@ -20,27 +20,39 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home',function(){
-    return "hello wolrd";
+// Route::get('/home',function(){
+//     return "hello wolrd";
+// });
+
+// Route::get('/test',[TestController::class,'index']);
+
+
+// Route::get('/user',function(Request $request){
+//     print_r($request->all());
+// });
+
+// Route::get('there',function(){
+//     echo "there";
+// });
+
+// Route::redirect('/here','there');
+
+// Route::view('viewpage','home',['user'=>"Megha"]);
+
+// Route::get('student/{name?}',function(string $name="malay"){
+//     echo "student name=".$name;
+// })->where('name','[A-Za-z]+');
+
+// Route::get('students',Student::class);
+// Route::get("admin",function(){
+//     $admin = ['name'=>"john",'role'=>'superadmin'];
+//     $subject = ["php","java","python"];
+//     return view('Admin.index',["admin"=>$admin,"subject"=>$subject,"flag"=>0]);
+// });
+
+Route::get('adminhome',function(){
+    return view('Admin.dashbord');
 });
-
-Route::get('/test',[TestController::class,'index']);
-
-
-Route::get('/user',function(Request $request){
-    print_r($request->all());
+Route::get('product',function(){
+    return view('Admin.product');
 });
-
-Route::get('there',function(){
-    echo "there";
-});
-
-Route::redirect('/here','there');
-
-Route::view('viewpage','home',['user'=>"Megha"]);
-
-Route::get('student/{name?}',function(string $name="malay"){
-    echo "student name=".$name;
-})->where('name','[A-Za-z]+');
-
-Route::get('students',Student::class);
