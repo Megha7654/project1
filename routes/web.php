@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Student;;
 use Illuminate\Http\Request;
 
@@ -53,6 +54,11 @@ Route::get('/', function () {
 Route::get('adminhome',function(){
     return view('Admin.dashbord');
 });
-Route::get('product',function(){
-    return view('Admin.product');
+Route::resource('product',ProductController::class);
+
+Route::get('/token',function(Request $request){
+    print_r($request->all());
+    //echo $token = $request->session()->token();
+   // echo $token= csrf_token();
 });
+
