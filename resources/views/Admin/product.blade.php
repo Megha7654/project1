@@ -13,7 +13,7 @@
             <td>ProductName</td>
             <td>Price</td>
             <td>Qty</td>
-            <td>action</td>
+            <td colspan=2>action</td>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +27,7 @@
                     @method('DELETE')
                     <input type="submit" value="DELETE" class="btn btn-danger">
                 </form></td>
+                <td><a href="{{route('product.edit',$key->pid)}}" class="btn btn-success">Edit</a></td>
             </tr>
         @endforeach
     </tbody>

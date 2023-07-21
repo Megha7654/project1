@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ProductStore;
 
 
 class ProductController extends Controller
@@ -36,15 +37,29 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStore $request)
     {
+       /* $request->validate([
+            'productname'=>'required|unique:product',
+            'qty'=>'required|numeric',
+            'price'=>'required',
+        ],
+            [
+                'productname.required'=>"Please enter Product Name",
+                'productname.unique'=>"Product Name is already taken in database"
+            ]
+        );*/
+
+        $validate= $request->validated();
+
+
         DB::table('product')->insert([
-            'productname'=>$request['pname'],
+            'productname'=>$request['productname'],
             'price'=>$request['price'],
             'qty'=>$request['qty'],
             'image'=>"one.jpg",
-            'created_at'=>date("Y-m-d H:i:s"),
-            'updated_at'=>date("Y-m-d H:i:s"),
+            // 'created_at'=>date("Y-m-d H:i:s"),
+            // 'updated_at'=>date("Y-m-d H:i:s"),
             'cid'=>1
         ]);
         return redirect()->route('product.index')->with(['success'=>"Data successfully inserted"]);
@@ -58,8 +73,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+         }
 
     /**
      * Show the form for editing the specified resource.
@@ -69,7 +83,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product=DB::table('product')->where(['pid'=>$id])->first();
+        return view('Admin.productedit',['product'=>$product]);
+   
     }
 
     /**
@@ -81,7 +97,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'productname'=>'required|unique:product',
+            'qty'=>'required|numeric',
+            'price'=>'required',
+        ],
+            [
+                'productname.required'=>"Please enter Product Name",
+                'productname.unique'=>"Product Name is already taken in database"
+            ]
+        );
+        $product=['productname'=>$request->pname,'price'=>$request->price,'qty'=>$request->qty];
+        DB::table('product')
+            ->where(['pid'=>$id])
+            ->update($product);
+            return redirect()->route('product.index')->with(['success'=>"Data successfully updated"]);
+
     }
 
     /**
