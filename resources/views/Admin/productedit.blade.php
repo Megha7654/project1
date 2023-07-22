@@ -12,12 +12,12 @@
     </div>
 @endif
 
-  <form method="POST" action="{{route('product.update',$product->pid)}}">
+  <form method="POST" action="{{route('product.update',$product->pid)}}" enctype="multipart/form-data">
     @csrf
     @method('put')
     <div class="form-group">
       <label for="email">Product Name:</label>
-      <input type="text" class="form-control" id="email" placeholder="Enter Productname" name="pname" require value="{{$product->productname ?? ''}}">
+      <input type="text" class="form-control" id="email" placeholder="Enter Productname" name="productname" require value="{{$product->productname ?? ''}}">
     </div>
     <div class="form-group">
       <label for="email">Product price:</label>
@@ -26,6 +26,13 @@
     <div class="form-group">
       <label for="email">Product qty:</label>
       <input type="text" class="form-control" id="email" placeholder="Enter Productname" name="qty" require value="{{$product->qty ?? ''}}">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Images</label>
+      <img src="{{asset('storage/images/'.$product->image)}}" alt="" width="100px">
+      <input type="file" class="form-control" id="email"  name="image" >
+      <input type="hidden" name="hiddenimg" value="{{$product->image}}">
     </div>
     
     <input type="submit" value="submit" name="submit" class="btn btn-primary">

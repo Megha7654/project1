@@ -13,6 +13,7 @@
             <td>ProductName</td>
             <td>Price</td>
             <td>Qty</td>
+            <td>Image</td>
             <td colspan=2>action</td>
         </tr>
     </thead>
@@ -22,6 +23,7 @@
                 <td>{{$key->productname}}</td>
                 <td>{{$key->price}}</td>
                 <td>{{$key->qty}}</td>
+                <td><img src="{{asset('storage/images/'.$key->image)}}" alt="" width="100px"></td>
                 <td><form method="POST" action="{{route('product.destroy',$key->pid)}}">
                     @csrf
                     @method('DELETE')

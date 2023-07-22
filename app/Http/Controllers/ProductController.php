@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProductStore;
+use Illuminate\Support\Facades\File;
+
 
 
 class ProductController extends Controller
@@ -51,15 +53,20 @@ class ProductController extends Controller
         );*/
 
         $validate= $request->validated();
+        
+        $file = $request->file('image');
+        //$fileName= $file->getClientOriginalName();
+        $fileName = time() . '.' . $request->image->extension();
 
-
+        $ext= $file->getClientOriginalExtension();
+        $temp=$file->getRealPath();
+        $request->image->storeAs('public/images',$fileName);
+        
         DB::table('product')->insert([
             'productname'=>$request['productname'],
             'price'=>$request['price'],
             'qty'=>$request['qty'],
-            'image'=>"one.jpg",
-            // 'created_at'=>date("Y-m-d H:i:s"),
-            // 'updated_at'=>date("Y-m-d H:i:s"),
+            'image'=>$fileName,
             'cid'=>1
         ]);
         return redirect()->route('product.index')->with(['success'=>"Data successfully inserted"]);
@@ -98,16 +105,38 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'productname'=>'required|unique:product',
+            'productname'=>'required',
             'qty'=>'required|numeric',
             'price'=>'required',
+            //'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
         ],
             [
                 'productname.required'=>"Please enter Product Name",
                 'productname.unique'=>"Product Name is already taken in database"
             ]
         );
-        $product=['productname'=>$request->pname,'price'=>$request->price,'qty'=>$request->qty];
+        if($request->file('image')){
+            echo $name=$request->hiddenimg;
+            if(\File::exists(public_path('storage/images/'.$name))){
+                \File::delete(public_path('storage/images/'.$name));
+              }else{
+                dd('File not found');
+              }            $file = $request->file('image');
+            //$fileName= $file->getClientOriginalName();
+            $fileName = time() . '.' . $request->image->extension();
+
+            $ext= $file->getClientOriginalExtension();
+        $temp=$file->getRealPath();
+        $request->image->storeAs('public/images',$fileName);
+        
+        }
+        else{
+
+            $fileName=$request->hiddenimg;
+        }
+        
+        $product=['productname'=>$request->productname,'price'=>$request->price,'qty'=>$request->qty,"image"=>$fileName];
         DB::table('product')
             ->where(['pid'=>$id])
             ->update($product);

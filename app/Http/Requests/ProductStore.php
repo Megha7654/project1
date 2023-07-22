@@ -42,6 +42,8 @@ class ProductStore extends FormRequest
             'productname'=>'required|unique:product',
             'qty'=>'required|numeric',
             'price'=>'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
         ];
     }
     public function messages(): array
