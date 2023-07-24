@@ -80,7 +80,13 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-         }
+        //$product = DB::table('product')->where('pid',$id)->value('productname');
+        //$product = DB::table('product')->pluck('productname','qty');
+        //$product =DB::table('product')->where('price','>',200)->get();
+        $product = DB::table('product')->selectRaw('price * ? as Price',[5])->get();
+                echo "<pre>";
+        print_r($product);
+     }
 
     /**
      * Show the form for editing the specified resource.
