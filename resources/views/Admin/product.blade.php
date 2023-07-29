@@ -32,6 +32,10 @@
                 <td><a href="{{route('product.edit',$key->pid)}}" class="btn btn-success">Edit</a></td>
             </tr>
         @endforeach
+    
     </tbody>
-</table>
+   </table>
+<div class="d-flex">
+                {!! $product->links() !!}
+            </div>
 @endsection
