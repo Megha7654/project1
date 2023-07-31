@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Student;;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\Student;
 use Illuminate\Http\Request;
 
 /*
@@ -61,4 +62,6 @@ Route::get('/token',function(Request $request){
     //echo $token = $request->session()->token();
    // echo $token= csrf_token();
 });
+
+Route::resource('/post',PostController::class);
 

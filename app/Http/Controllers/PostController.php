@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -13,7 +14,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $postdata = Post::all();
+        echo "<pre>";
+        print_r($postdata);
+
     }
 
     /**
@@ -44,8 +48,23 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {  
+       /* Post::create([
+            'title'=>"lorem",
+            'description'=>'test'
+        ]);
+        */
+        /*$post = Post::find(6);
+        $post->title = "Laravel";
+        $post->save();
+        */
+        /*Post::where('id',6)->update([
+            'title'=>"ORM",
+            'description'=>"eloequent ORM"
+        ]);*/
+        $post = Post::find(6);
+        $post->delete();
+
     }
 
     /**
